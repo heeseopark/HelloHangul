@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class HellohangulConfig(AppConfig):
+class KtalkConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'hellohangul'
+    name = 'ktalk'
