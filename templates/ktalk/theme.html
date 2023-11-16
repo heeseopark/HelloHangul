@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>테마 목록</title>
+</head>
+<body>
+    <h1>테마 목록</h1>
+
+    <ul>
+        {% for theme in themelist %}
+            <li>
+                <!-- 각 테마 이름을 클릭하면 해당 테마의 대화 내용을 보여주는 페이지로 이동 -->
+                <a href="{% url 'theme_conversation' theme.id %}">{{ theme.name }}</a>
+                <!-- 삭제 버튼 -->
+                <form action="{% url 'delete_theme' theme.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">삭제</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- 테마 추가 폼 -->
+    <form action="{% url 'add_theme' %}" method="post">
+        {% csrf_token %}
+        <textarea name="new_theme" rows="3"></textarea>
+        <button type="submit">테마 추가</button>
+    </form>
+</body>
+</html>

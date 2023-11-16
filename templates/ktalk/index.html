@@ -3,28 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/ktalk/style.css">
     <title>Chatbot for Korean Language Learning</title>
 </head>
 <body>
     <div class="mobile-container">
         <div class="left-panel">
-            <!-- Situations List -->
-            {% for situation in situations %}
-                <div class="situation-item">{{ situation }}</div>
+            <!-- Theme List -->
+            {% for theme in themelist %}
+                <!-- Each theme name is a link to its conversation page -->
+                <div class="theme-item">
+                    <a href="{% url 'index_with_theme' theme.id %}">{{ theme.name }}</a>
+                </div>
             {% endfor %}
         </div>
         <div class="right-panel">
             <!-- Conversation List -->
             <div class="conversation-list">
-                {% for conversation in conversations %}
-                    <div class="conversation-item">{{ conversation }}</div>
+                <!-- Render each conversation here -->
+                {% for question, answer in conversations %}
+                    <div class="conversation-item">
+                        <div class="question">{{ question.content }}</div>
+                        <div class="answer">{{ answer.content }}</div>
+                    </div>
                 {% endfor %}
             </div>
             <!-- Input Area -->
             <div class="input-area">
-                <form action="{% url 'submit_conversation' %}" method="post">
+                <form method="post">
                     {% csrf_token %}
+                    <input type="hidden" name="theme_id" id="selected-theme-id" value="">
                     <textarea name="message" rows="4" placeholder="Type your message..."></textarea>
                     <button type="submit" class="submit-button">Submit</button>
                 </form>
