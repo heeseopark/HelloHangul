@@ -2,12 +2,17 @@ from django.db import models
 
 # Create your models here.
 
-
-class ChatListTest(models.Model):
-    id = models.IntegerField(primary_key=True)
-    conversation = models.IntegerField() # one to one mapping with the conversationlisttest table
-
 class ConversationListTest(models.Model):
-    id = models.IntegerField(primary_key=True)
     question = models.TextField()
     answer = models.TextField()
+
+class ChatListTest(models.Model):
+    conversation = models.OneToOneField(ConversationListTest, on_delete=models.CASCADE)
+
+class ThemeListTest(models.Model):
+    theme = models.TextField()
+
+class QuizListTest(models.Model):
+    question = models.TextField()
+    answer = models.TextField()
+    theme = models.ForeignKey(ThemeListTest, on_delete=models.CASCADE)
