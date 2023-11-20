@@ -5,7 +5,7 @@ from .models import ThemeTest, QuestionTest, AnswerTest
 
 from django.shortcuts import render, get_object_or_404
 
-def index(request, theme_id=None):
+def index(request, theme_id=1):
     themelist = ThemeTest.objects.all().order_by('id')
 
     # Check if a specific theme's conversations are to be displayed
