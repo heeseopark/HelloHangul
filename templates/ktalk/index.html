@@ -13,7 +13,7 @@
             {% for theme in themelist %}
                 <!-- Each theme name is a link to its conversation page -->
                 <div class="theme-item">
-                    <a href="{% url 'index_with_theme' theme.id %}">{{ theme.name }}</a>
+                    <a href="{% url 'ktalk:index_with_theme' theme.id %}">{{ theme.name }}</a>
                 </div>
             {% endfor %}
         </div>

@@ -1,43 +1,37 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import ThemeTest, QuestionTest, AnswerTest
-# import gpt_api  # Replace this with your actual GPT API integration
+from .models import *
+from .gpt import ChatSession
 
 from django.shortcuts import render, get_object_or_404
 
-def index(request, theme_id=1):
+def index(request, theme_id=None):
     themelist = ThemeTest.objects.all().order_by('id')
+    theme = None
+    conversations = []
 
-    # Check if a specific theme's conversations are to be displayed
     if theme_id:
         theme = get_object_or_404(ThemeTest, id=theme_id)
-        questions = QuestionTest.objects.filter(theme=theme)
-        conversations = []
-        for question in questions:
-            try:
-                answer = AnswerTest.objects.get(question=question)
-                conversations.append((question, answer))
-            except AnswerTest.DoesNotExist:
-                continue
-    else:
-        theme = None
-        conversations = []
+        conversation_objects = ConversationTest.objects.filter(theme=theme).order_by('id')
+
+        # Process conversation_objects to pair questions with answers
+        temp_conversations = []
+        for conversation in conversation_objects:
+            if conversation.role == 'user':
+                temp_conversations.append((conversation, None))  # Add user question with a placeholder for the answer
+            elif conversation.role == 'assistant' and temp_conversations:
+                # Assuming each user input is followed by an assistant response
+                last_conversation = temp_conversations[-1]
+                if last_conversation[1] is None:  # If the last item has no answer
+                    temp_conversations[-1] = (last_conversation[0], conversation)  # Pair the last question with this answer
+
+        conversations = [conv for conv in temp_conversations if conv[1] is not None]  # Filter out unanswered questions
 
     if request.method == 'POST':
         user_input = request.POST.get('message')
-        theme = ThemeTest.objects.get(id=theme_id)
-
-        # Create a new question associated with the theme
-        question = QuestionTest.objects.create(theme=theme, content=user_input)
-
-        # Get response from GPT
-        gpt_response = "test answer"
-        # gpt_response = gpt_api.get_response(user_input)  # Replace with actual GPT API call
-
-        # Save the answer associated with the question
-        AnswerTest.objects.create(question=question, content=gpt_response)
-
-        return HttpResponseRedirect(f'/ktalk/init/{theme_id}')
+        chat_session = ChatSession(theme_id=theme_id)
+        chat_session.get_response(user_input)
+        return HttpResponseRedirect(f'/ktalk/init/{theme_id}' if theme_id else '/ktalk/init/')
 
     context = {
         'themelist': themelist,
@@ -47,11 +41,13 @@ def index(request, theme_id=1):
 
     return render(request, 'ktalk/index.html', context)
 
+
+
 def theme(request):
     themelist = ThemeTest.objects.all().order_by('id')
     
     if request.method == 'POST':
-        return HttpResponseRedirect('/ktalk/addtheme/')
+        return HttpResponseRedirect('/ktalk/add_theme/')
     
     context = {
         'themelist' : themelist,
@@ -64,10 +60,10 @@ def add_theme(request):
         new_theme = request.POST.get('new_theme')
         if new_theme:
             ThemeTest.objects.create(name=new_theme)
-    return redirect('theme')
+    return redirect('ktalk:theme')
 
 def delete_theme(request, theme_id):
     if request.method == 'POST':
         theme = ThemeTest.objects.get(id=theme_id)
         theme.delete()
-    return redirect('theme')
+    return redirect('ktalk:theme')

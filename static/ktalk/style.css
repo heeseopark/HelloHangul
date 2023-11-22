@@ -65,3 +65,11 @@ button.submit-button {
 button.submit-button:hover {
     background-color: #45a049;
 }
+
+.question {
+    text-align: right;
+}
+
+.answer {
+    text-align: left;
+}
