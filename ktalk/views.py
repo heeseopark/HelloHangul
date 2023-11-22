@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import *
-from .gpt import ChatSession
+from .newgpt import ChatSession
 
 from django.shortcuts import render, get_object_or_404
 
@@ -30,7 +30,9 @@ def index(request, theme_id=None):
     if request.method == 'POST':
         user_input = request.POST.get('message')
         chat_session = ChatSession(theme_id=theme_id)
-        chat_session.get_response(user_input)
+        chat_session.store_message('user', user_input)
+        gpt_response = chat_session.get_response(user_input)
+        conversations.append((user_input, gpt_response))
         return HttpResponseRedirect(f'/ktalk/init/{theme_id}' if theme_id else '/ktalk/init/')
 
     context = {
@@ -58,12 +60,22 @@ def theme(request):
 def add_theme(request):
     if request.method == 'POST':
         new_theme = request.POST.get('new_theme')
+        new_assistant_role = request.POST.get('new_assistant_role', '')  # Default to empty string if not provided
         if new_theme:
-            ThemeTest.objects.create(name=new_theme)
+            ThemeTest.objects.create(name=new_theme, assistantrole=new_assistant_role)
     return redirect('ktalk:theme')
+
 
 def delete_theme(request, theme_id):
     if request.method == 'POST':
         theme = ThemeTest.objects.get(id=theme_id)
         theme.delete()
     return redirect('ktalk:theme')
+
+def delete_theme_conversation(request):
+    if request.method == 'POST':
+        theme_id = request.POST.get('theme_id')
+        found_theme = ThemeTest.objects.get(id = theme_id)
+        theme = ConversationTest.objects.get(theme = found_theme)
+        theme.delete()
+    return redirect('ktalk:index')

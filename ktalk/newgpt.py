@@ -1,5 +1,5 @@
 from openai import OpenAI
-from .models. import *
+from .models import *
 from .secrets import OPENAI_API_KEY
 
 class ChatSession:
@@ -15,7 +15,7 @@ class ChatSession:
         previous_conversations = ConversationTest.objects.filter(theme=self.theme)
 
         # Build messages list including previous conversations
-        messages = [{"role": "system", "content": "You are an assistant helping a non-Korean person learn Korean. Start a conversation in this situation: " + self.theme.name}]
+        messages = [{"role": "system", "content": "You are an assistant helping a non-Korean person learn Korean. Act as if you are having a conversation with the user. So use easy korean vocabulary and try to make as many conversations possible. Start a conversation in this situation: " + self.theme.name + "Here is your role: " + self.theme.assistantrole}]
         messages.extend([{"role": conv.role, "content": conv.content} for conv in previous_conversations])
 
         # Add current user input

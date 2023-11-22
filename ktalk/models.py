@@ -3,7 +3,7 @@ from django.db import models
 class ThemeTest(models.Model):
     name = models.CharField(max_length=100)
     inittext = models.TextField()
-    test = models.TextField()
+    assistantrole = models.TextField()
 
 class QuestionTest(models.Model):
     theme = models.ForeignKey(ThemeTest, on_delete=models.CASCADE)

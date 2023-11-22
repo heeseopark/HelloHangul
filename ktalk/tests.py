@@ -2,7 +2,7 @@ from openai import OpenAI
 
 class ChatSession:
     def __init__(self):
-        self.client = OpenAI(api_key="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")
+        self.client = OpenAI(api_key="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")
         self.messages = [{"role": "system", "content": "You are an assistant that provides korean coversation for non-korean users who wants to learn korean. here is the situation: 은행에서 직원한테 계좌개설하는 방법 물어보기. act as if you are having a conversation this the user"}]
 
     def append_message(self, content, role):

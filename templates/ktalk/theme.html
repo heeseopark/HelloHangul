@@ -10,7 +10,8 @@
         {% for theme in themelist %}
             <li>
                 <!-- 각 테마 이름을 클릭하면 해당 테마의 대화 내용을 보여주는 페이지로 이동 -->
-                <a href="{% url 'ktalk:index_with_theme' theme.id %}">{{ theme.name }}</a>
+                <a href="{% url 'ktalk:index_with_theme' theme.id %}">theme 이름: {{ theme.name }}</a>
+                <p>gpt 역할: {{ theme.assistantrole }}</p>
                 <!-- 삭제 버튼 -->
                 <form action="{% url 'ktalk:delete_theme' theme.id %}" method="post" style="display: inline;">
                     {% csrf_token %}
@@ -23,8 +24,11 @@
     <!-- 테마 추가 폼 -->
     <form action="{% url 'ktalk:add_theme' %}" method="post">
         {% csrf_token %}
-        <textarea name="new_theme" rows="3"></textarea>
+        <textarea name="new_theme" rows="3" placeholder="Theme 이름 추가하는 곳"></textarea><br>
+        <textarea name="new_assistant_role" rows="3" placeholder="gpt가 했으면 하는 역할"></textarea><br>
         <button type="submit">테마 추가</button>
     </form>
+    <button><a href="{% url 'ktalk:index' %}">대화 페이지로</a></button>
+
 </body>
 </html>

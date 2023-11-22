@@ -68,8 +68,10 @@ button.submit-button:hover {
 
 .question {
     text-align: right;
+    color: red;
 }
 
 .answer {
     text-align: left;
+    color: blue;
 }

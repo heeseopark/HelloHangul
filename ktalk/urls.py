@@ -10,5 +10,5 @@ urlpatterns = [
     path('delete_theme/<int:theme_id>/', views.delete_theme, name='delete_theme'),
     path('init/', views.index, name='index'),
     path('init/<int:theme_id>/', views.index, name='index_with_theme'),
-    
+    path('delete_conversation/', views.delete_theme_conversation, name='delete_conversation'),
 ]

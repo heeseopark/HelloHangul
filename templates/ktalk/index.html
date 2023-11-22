@@ -9,24 +9,40 @@
 <body>
     <div class="mobile-container">
         <div class="left-panel">
+            <div>
+                <button><a href="{% url 'ktalk:theme' %}">theme 목록 보러 가기</a></button>
+            </div>
             <!-- Theme List -->
             {% for theme in themelist %}
                 <!-- Each theme name is a link to its conversation page -->
                 <div class="theme-item">
                     <a href="{% url 'ktalk:index_with_theme' theme.id %}">{{ theme.name }}</a>
                 </div>
+
             {% endfor %}
+
         </div>
         <div class="right-panel">
             <!-- Conversation List -->
             <div class="conversation-list">
                 <!-- Render each conversation here -->
+                {% if Conversations is False %}
+                <p>Start your conversation</p>
+                {% endif %}
                 {% for question, answer in conversations %}
                     <div class="conversation-item">
                         <div class="question">{{ question.content }}</div>
                         <div class="answer">{{ answer.content }}</div>
                     </div>
                 {% endfor %}
+                {% if theme.conversations.exists %}
+                <form action="{% url 'ktalk:delete_conversation'%}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <!-- Hidden input to hold the theme's id -->
+                    <input type="hidden" name="theme_id" value="{{ theme.id }}">
+                    <button type="submit">Delete All Conversations</button>
+                </form>
+                {% endif %}
             </div>
             <!-- Input Area -->
             <div class="input-area">
