@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['port-0-k-talk-9zxht12blq9pxr4s.sel4.cloudtype.app']
 
-CSRF_TRUSTED_ORIGINS = ['port-0-k-talk-9zxht12blq9pxr4s.sel4.cloudtype.app']
+CSRF_TRUSTED_ORIGINS = ['https://port-0-k-talk-9zxht12blq9pxr4s.sel4.cloudtype.app/']
 
 # Application definition
 
