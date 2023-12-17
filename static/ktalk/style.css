@@ -1,77 +1,20 @@
-/* Basic Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* .chat-message {
+    max-width: 75%;
+    margin-bottom: 1rem;
+} */
 
-body {
-    font-family: Arial, sans-serif;
-}
-
-/* Mobile Container */
-.mobile-container {
-    max-width: 600px;
-    margin: auto;
-    border: 1px solid #ccc;
-    overflow: hidden;
-}
-
-/* Layout */
-.left-panel, .right-panel {
-    float: left;
-    padding: 20px;
-}
-
-/* Left Panel - Situation List */
-.left-panel {
-    width: 30%;
-    border-right: 1px solid #ccc;
-    height: 500px; /* Adjust as needed */
-    overflow-y: auto;
-}
-
-/* Right Panel - Main Content */
-.right-panel {
-    width: 70%;
-}
-
-.conversation-list {
-    height: 450px; /* Adjust as needed */
-    overflow-y: auto;
-}
-
-/* Textarea and Button */
-.input-area {
-    margin-top: 10px;
-}
-
-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-}
-
-button.submit-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button.submit-button:hover {
-    background-color: #45a049;
-}
-
-.question {
+.question{
     text-align: right;
-    color: red;
+    background-color: #e5e7eb;
+    border-radius: 1rem 1rem 0 1rem;
 }
 
 .answer {
     text-align: left;
-    color: blue;
+    background-color: #f9fafb;
+    border-radius: 1rem 1rem 1rem 0;
+}
+
+textarea {
+    resize: none;
 }

@@ -41,7 +41,7 @@ def index(request, theme_id=None):
         'conversations': conversations,
     }
 
-    return render(request, 'ktalk/index.html', context)
+    return render(request, 'ktalk/new_index.html', context)
 
 
 
