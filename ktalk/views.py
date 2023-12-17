@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .models import *
 from .newgpt import ChatSession
+from django.views.decorators.csrf import csrf_exempt
 
 from django.shortcuts import render, get_object_or_404
 
@@ -44,7 +45,7 @@ def index(request, theme_id=None):
     return render(request, 'ktalk/new_index.html', context)
 
 
-
+@csrf_exempt
 def theme(request):
     themelist = ThemeTest.objects.all().order_by('id')
     
