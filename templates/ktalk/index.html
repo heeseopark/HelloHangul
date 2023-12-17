@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/ktalk/style.css">
     <title>Chatbot for Korean Language Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .chat-message {
+            max-width: 75%;
+            margin-bottom: 1rem;
+        }
+        .question {
+            justify-self-end;
+            background-color: #e5e7eb;
+            border-radius: 1rem 1rem 0 1rem;
+        }
+        .answer {
+            justify-self-start;
+            background-color: #f9fafb;
+            border-radius: 1rem 1rem 1rem 0;
+        }
+    </style>
 </head>
 <body>
     <div class="mobile-container">
@@ -15,7 +32,7 @@
             <!-- Theme List -->
             {% for theme in themelist %}
                 <!-- Each theme name is a link to its conversation page -->
-                <div class="theme-item">
+                <div class="theme-item p-2 bg-white rounded-lg shadow cursor-pointer">
                     <a href="{% url 'ktalk:index_with_theme' theme.id %}">{{ theme.name }}</a>
                 </div>
 
