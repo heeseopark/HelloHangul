@@ -1,4 +1,7 @@
 ## 프로젝트 소개
+
+고려대학교 창의적소프트웨어창업론 수업 프로젝트
+
 - 프로젝트 기간: 23.09 ~ 23.12.
 - 프로젝트 기술: `Python Django`, `GPT API`
 - 프로젝트 링크: [K-talk pro 예시 페이지](https://port-0-k-talk-9zxht12blq9pxr4s.sel4.cloudtype.app/ktalk/init/)
